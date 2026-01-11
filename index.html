@@ -10,11 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a2e 100%);
             min-height: 100vh;
         }
         
@@ -23,15 +23,17 @@
         }
         
         .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 16px -1px rgba(0, 0, 0, 0.3), 0 4px 8px -1px rgba(0, 0, 0, 0.2);
         }
         
         .stat-card {
-            transition: transform 0.2s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .stat-card:hover {
             transform: translateY(-4px);
+            box-shadow: 0 12px 24px -1px rgba(0, 0, 0, 0.4);
         }
         
         .chart-container {
@@ -39,10 +41,45 @@
             height: 300px;
         }
         
+        .platform-bar {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .platform-bar.selected {
+            opacity: 0.7;
+            transform: scale(0.95);
+        }
+        
         @media (max-width: 768px) {
             .chart-container {
                 height: 250px;
             }
+        }
+        
+        /* Dark theme overrides */
+        .bg-white {
+            background-color: #1e1e2e !important;
+        }
+        
+        .text-gray-800 {
+            color: #e0e0e0 !important;
+        }
+        
+        .text-gray-500 {
+            color: #a0a0b0 !important;
+        }
+        
+        .text-gray-600 {
+            color: #b0b0c0 !important;
+        }
+        
+        .bg-gray-50 {
+            background-color: #2a2a3e !important;
+        }
+        
+        .hover\:bg-gray-100:hover {
+            background-color: #3a3a4e !important;
         }
     </style>
 </head>
