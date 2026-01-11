@@ -19,37 +19,20 @@ const mockData = {
     ],
     platformEngagement: [
         { 
-            platform: 'YouTube', 
-            followers: 12500, 
-            engagement: 8.2,
+            platform: 'TikTok', 
+            followers: 24700, 
+            engagement: 15.8,
             stateEngagement: {
-                'CA': { views: 4500, comments: 2800, shares: 1200 },
-                'TX': { views: 3200, comments: 2100, shares: 900 },
-                'FL': { views: 2600, comments: 1500, shares: 700 },
-                'NY': { views: 2800, comments: 1700, shares: 700 },
-                'PA': { views: 1700, comments: 900, shares: 500 },
-                'IL': { views: 1500, comments: 850, shares: 450 },
-                'OH': { views: 1400, comments: 800, shares: 400 },
-                'GA': { views: 1300, comments: 750, shares: 350 },
-                'NC': { views: 1200, comments: 680, shares: 320 },
-                'MI': { views: 1100, comments: 600, shares: 300 }
-            }
-        },
-        { 
-            platform: 'Instagram', 
-            followers: 18300, 
-            engagement: 12.5,
-            stateEngagement: {
-                'CA': { views: 6800, comments: 3900, shares: 1800 },
-                'NY': { views: 4500, comments: 2500, shares: 1200 },
-                'FL': { views: 4200, comments: 2400, shares: 1200 },
-                'TX': { views: 3500, comments: 2000, shares: 1000 },
-                'IL': { views: 2100, comments: 1100, shares: 600 },
-                'PA': { views: 1800, comments: 950, shares: 450 },
-                'OH': { views: 1600, comments: 850, shares: 450 },
-                'NC': { views: 1500, comments: 780, shares: 420 },
-                'GA': { views: 1450, comments: 750, shares: 400 },
-                'MI': { views: 1350, comments: 700, shares: 350 }
+                'CA': { views: 8200, comments: 4500, shares: 2500 },
+                'TX': { views: 5300, comments: 2900, shares: 1600 },
+                'FL': { views: 4800, comments: 2600, shares: 1500 },
+                'NY': { views: 3900, comments: 2100, shares: 1200 },
+                'GA': { views: 2300, comments: 1200, shares: 700 },
+                'NC': { views: 2100, comments: 1100, shares: 600 },
+                'IL': { views: 1900, comments: 1000, shares: 600 },
+                'OH': { views: 1750, comments: 950, shares: 500 },
+                'PA': { views: 1650, comments: 900, shares: 450 },
+                'MI': { views: 1550, comments: 850, shares: 400 }
             }
         },
         { 
@@ -70,20 +53,37 @@ const mockData = {
             }
         },
         { 
-            platform: 'TikTok', 
-            followers: 24700, 
-            engagement: 15.8,
+            platform: 'Instagram', 
+            followers: 18300, 
+            engagement: 12.5,
             stateEngagement: {
-                'CA': { views: 8200, comments: 4500, shares: 2500 },
-                'TX': { views: 5300, comments: 2900, shares: 1600 },
-                'FL': { views: 4800, comments: 2600, shares: 1500 },
-                'NY': { views: 3900, comments: 2100, shares: 1200 },
-                'GA': { views: 2300, comments: 1200, shares: 700 },
-                'NC': { views: 2100, comments: 1100, shares: 600 },
-                'IL': { views: 1900, comments: 1000, shares: 600 },
-                'OH': { views: 1750, comments: 950, shares: 500 },
-                'PA': { views: 1650, comments: 900, shares: 450 },
-                'MI': { views: 1550, comments: 850, shares: 400 }
+                'CA': { views: 6800, comments: 3900, shares: 1800 },
+                'NY': { views: 4500, comments: 2500, shares: 1200 },
+                'FL': { views: 4200, comments: 2400, shares: 1200 },
+                'TX': { views: 3500, comments: 2000, shares: 1000 },
+                'IL': { views: 2100, comments: 1100, shares: 600 },
+                'PA': { views: 1800, comments: 950, shares: 450 },
+                'OH': { views: 1600, comments: 850, shares: 450 },
+                'NC': { views: 1500, comments: 780, shares: 420 },
+                'GA': { views: 1450, comments: 750, shares: 400 },
+                'MI': { views: 1350, comments: 700, shares: 350 }
+            }
+        },
+        { 
+            platform: 'YouTube', 
+            followers: 12500, 
+            engagement: 8.2,
+            stateEngagement: {
+                'CA': { views: 4500, comments: 2800, shares: 1200 },
+                'TX': { views: 3200, comments: 2100, shares: 900 },
+                'FL': { views: 2600, comments: 1500, shares: 700 },
+                'NY': { views: 2800, comments: 1700, shares: 700 },
+                'PA': { views: 1700, comments: 900, shares: 500 },
+                'IL': { views: 1500, comments: 850, shares: 450 },
+                'OH': { views: 1400, comments: 800, shares: 400 },
+                'GA': { views: 1300, comments: 750, shares: 350 },
+                'NC': { views: 1200, comments: 680, shares: 320 },
+                'MI': { views: 1100, comments: 600, shares: 300 }
             }
         },
         { 
@@ -111,10 +111,11 @@ const mockData = {
         { title: 'Behind the Scenes: F-Bomb Camaro', views: 12300, duration: '6:20', comments: 678, shares: 223 }
     ],
     trafficSources: [
-        { source: 'Social Media', value: 45, percentage: '45%' },
-        { source: 'Direct', value: 28, percentage: '28%' },
-        { source: 'Search', value: 18, percentage: '18%' },
-        { source: 'Referral', value: 9, percentage: '9%' }
+        { source: 'Social Media', value: 38, percentage: '38%' },
+        { source: 'Direct', value: 24, percentage: '24%' },
+        { source: 'Reddit', value: 20, percentage: '20%' },
+        { source: 'Search', value: 12, percentage: '12%' },
+        { source: 'Referral', value: 6, percentage: '6%' }
     ]
 };
 
@@ -484,10 +485,11 @@ function DoughnutChart({ data }) {
                     datasets: [{
                         data: data.map(d => d.value),
                         backgroundColor: [
-                            'rgba(52, 120, 248, 0.9)',
-                            'rgba(25, 195, 238, 0.9)',
-                            'rgba(52, 120, 248, 0.6)',
-                            'rgba(25, 195, 238, 0.6)'
+                            'rgba(52, 120, 248, 0.9)',      // Social Media - dark blue
+                            'rgba(25, 195, 238, 0.9)',      // Direct - light blue
+                            'rgba(255, 255, 255, 0.9)',     // Reddit - white
+                            'rgba(52, 120, 248, 0.6)',      // Search - dark blue lighter
+                            'rgba(25, 195, 238, 0.6)'       // Referral - light blue lighter
                         ],
                         borderWidth: 2,
                         borderColor: '#000000'
