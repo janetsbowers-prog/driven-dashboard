@@ -22,56 +22,68 @@ const mockData = {
             platform: 'YouTube', 
             followers: 12500, 
             engagement: 8.2,
-            weeklyData: {
-                posts: [12, 15, 18, 22, 28, 35, 30],
-                reposts: [45, 52, 48, 65, 72, 88, 75],
-                comments: [234, 278, 312, 389, 445, 502, 478]
-            },
             stateEngagement: {
-                'CA': 8500, 'TX': 6200, 'FL': 4800, 'NY': 5200, 'PA': 3100,
-                'IL': 2800, 'OH': 2600, 'GA': 2400, 'NC': 2200, 'MI': 2000
+                'CA': { views: 4500, comments: 2800, shares: 1200 },
+                'TX': { views: 3200, comments: 2100, shares: 900 },
+                'FL': { views: 2600, comments: 1500, shares: 700 },
+                'NY': { views: 2800, comments: 1700, shares: 700 },
+                'PA': { views: 1700, comments: 900, shares: 500 },
+                'IL': { views: 1500, comments: 850, shares: 450 },
+                'OH': { views: 1400, comments: 800, shares: 400 },
+                'GA': { views: 1300, comments: 750, shares: 350 },
+                'NC': { views: 1200, comments: 680, shares: 320 },
+                'MI': { views: 1100, comments: 600, shares: 300 }
             }
         },
         { 
             platform: 'Instagram', 
             followers: 18300, 
             engagement: 12.5,
-            weeklyData: {
-                posts: [18, 22, 25, 28, 32, 38, 35],
-                reposts: [156, 189, 201, 245, 289, 334, 312],
-                comments: [445, 523, 589, 678, 756, 834, 789]
-            },
             stateEngagement: {
-                'CA': 12500, 'NY': 8200, 'FL': 7800, 'TX': 6500, 'IL': 3800,
-                'PA': 3200, 'OH': 2900, 'NC': 2700, 'GA': 2600, 'MI': 2400
+                'CA': { views: 6800, comments: 3900, shares: 1800 },
+                'NY': { views: 4500, comments: 2500, shares: 1200 },
+                'FL': { views: 4200, comments: 2400, shares: 1200 },
+                'TX': { views: 3500, comments: 2000, shares: 1000 },
+                'IL': { views: 2100, comments: 1100, shares: 600 },
+                'PA': { views: 1800, comments: 950, shares: 450 },
+                'OH': { views: 1600, comments: 850, shares: 450 },
+                'NC': { views: 1500, comments: 780, shares: 420 },
+                'GA': { views: 1450, comments: 750, shares: 400 },
+                'MI': { views: 1350, comments: 700, shares: 350 }
             }
         },
         { 
             platform: 'TikTok', 
             followers: 24700, 
             engagement: 15.8,
-            weeklyData: {
-                posts: [25, 32, 38, 45, 52, 62, 58],
-                reposts: [567, 645, 712, 834, 923, 1045, 989],
-                comments: [1234, 1456, 1678, 1923, 2156, 2445, 2312]
-            },
             stateEngagement: {
-                'CA': 15200, 'TX': 9800, 'FL': 8900, 'NY': 7200, 'GA': 4200,
-                'NC': 3800, 'IL': 3500, 'OH': 3200, 'PA': 3000, 'MI': 2800
+                'CA': { views: 8200, comments: 4500, shares: 2500 },
+                'TX': { views: 5300, comments: 2900, shares: 1600 },
+                'FL': { views: 4800, comments: 2600, shares: 1500 },
+                'NY': { views: 3900, comments: 2100, shares: 1200 },
+                'GA': { views: 2300, comments: 1200, shares: 700 },
+                'NC': { views: 2100, comments: 1100, shares: 600 },
+                'IL': { views: 1900, comments: 1000, shares: 600 },
+                'OH': { views: 1750, comments: 950, shares: 500 },
+                'PA': { views: 1650, comments: 900, shares: 450 },
+                'MI': { views: 1550, comments: 850, shares: 400 }
             }
         },
         { 
             platform: 'Facebook', 
             followers: 9200, 
             engagement: 5.4,
-            weeklyData: {
-                posts: [8, 10, 12, 14, 16, 19, 17],
-                reposts: [23, 28, 32, 38, 45, 52, 48],
-                comments: [89, 103, 118, 134, 156, 178, 167]
-            },
             stateEngagement: {
-                'FL': 3200, 'TX': 2800, 'CA': 2500, 'NY': 1900, 'PA': 1500,
-                'OH': 1400, 'IL': 1200, 'NC': 1100, 'GA': 1000, 'MI': 900
+                'FL': { views: 1800, comments: 950, shares: 450 },
+                'TX': { views: 1550, comments: 850, shares: 400 },
+                'CA': { views: 1400, comments: 750, shares: 350 },
+                'NY': { views: 1050, comments: 550, shares: 300 },
+                'PA': { views: 850, comments: 450, shares: 200 },
+                'OH': { views: 780, comments: 410, shares: 210 },
+                'IL': { views: 670, comments: 350, shares: 180 },
+                'NC': { views: 610, comments: 320, shares: 170 },
+                'GA': { views: 560, comments: 290, shares: 150 },
+                'MI': { views: 510, comments: 270, shares: 120 }
             }
         }
     ],
@@ -184,81 +196,88 @@ function exportReport() {
     URL.revokeObjectURL(url);
 }
 
-// US Heat Map Component
-function USHeatMap({ platform, data }) {
-    const canvasRef = useRef(null);
+// Stacked Bar Chart for State Engagement
+function StateEngagementChart({ platform, data }) {
+    if (!data) return null;
     
-    useEffect(() => {
-        if (!canvasRef.current || !data) return;
-        
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Get max value for color scaling
-        const maxValue = Math.max(...Object.values(data));
-        
-        // Simple state positions (approximate, for demo purposes)
-        const statePositions = {
-            'CA': { x: 50, y: 150, size: 60 },
-            'TX': { x: 250, y: 200, size: 55 },
-            'FL': { x: 380, y: 240, size: 45 },
-            'NY': { x: 400, y: 80, size: 35 },
-            'PA': { x: 380, y: 100, size: 30 },
-            'IL': { x: 280, y: 120, size: 30 },
-            'OH': { x: 330, y: 110, size: 28 },
-            'GA': { x: 350, y: 200, size: 28 },
-            'NC': { x: 370, y: 180, size: 28 },
-            'MI': { x: 320, y: 90, size: 28 }
-        };
-        
-        // Draw states
-        Object.entries(data).forEach(([state, value]) => {
-            const pos = statePositions[state];
-            if (!pos) return;
-            
-            const intensity = value / maxValue;
-            
-            // Color gradient from dark blue to light blue
-            const r = Math.floor(25 + intensity * 27); // 52 (dark) to 255 (light)
-            const g = Math.floor(120 + intensity * 75); // 120 to 195
-            const b = Math.floor(238 * intensity); // 0 to 238
-            
-            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.8)`;
-            ctx.beginPath();
-            ctx.arc(pos.x, pos.y, pos.size, 0, Math.PI * 2);
-            ctx.fill();
-            
-            // State label
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 12px Inter';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(state, pos.x, pos.y - 5);
-            
-            // Value label
-            ctx.font = '10px Inter';
-            ctx.fillText((value / 1000).toFixed(1) + 'k', pos.x, pos.y + 8);
-        });
-        
-    }, [platform, data]);
+    // Sort states by total engagement
+    const sortedStates = Object.entries(data)
+        .map(([state, metrics]) => ({
+            state,
+            ...metrics,
+            total: metrics.views + metrics.comments + metrics.shares
+        }))
+        .sort((a, b) => b.total - a.total);
+    
+    const maxTotal = sortedStates[0]?.total || 1;
     
     return (
-        <div className="relative w-full h-full flex items-center justify-center">
-            <canvas 
-                ref={canvasRef} 
-                width={500} 
-                height={300}
-                className="max-w-full"
-            />
-            {platform && (
-                <div className="absolute top-2 right-2 text-xs px-3 py-1 rounded-full" 
-                     style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: '#19c3ee' }}>
-                    {platform} Engagement by State
+        <div className="space-y-3">
+            {sortedStates.map((stateData, idx) => {
+                const viewsPercent = (stateData.views / maxTotal) * 100;
+                const commentsPercent = (stateData.comments / maxTotal) * 100;
+                const sharesPercent = (stateData.shares / maxTotal) * 100;
+                
+                return (
+                    <div key={stateData.state} className="space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                            <span className="font-medium" style={{ color: '#ffffff' }}>{stateData.state}</span>
+                            <span style={{ color: '#a0a0b0' }}>{stateData.total.toLocaleString()} total</span>
+                        </div>
+                        <div className="flex h-6 rounded overflow-hidden" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+                            <div 
+                                className="flex items-center justify-center text-xs font-medium transition-all"
+                                style={{ 
+                                    width: `${viewsPercent}%`,
+                                    backgroundColor: '#3478f8',
+                                    color: 'white'
+                                }}
+                                title={`Views: ${stateData.views.toLocaleString()}`}
+                            >
+                                {viewsPercent > 15 && stateData.views.toLocaleString()}
+                            </div>
+                            <div 
+                                className="flex items-center justify-center text-xs font-medium transition-all"
+                                style={{ 
+                                    width: `${commentsPercent}%`,
+                                    backgroundColor: '#19c3ee',
+                                    color: 'white'
+                                }}
+                                title={`Comments: ${stateData.comments.toLocaleString()}`}
+                            >
+                                {commentsPercent > 15 && stateData.comments.toLocaleString()}
+                            </div>
+                            <div 
+                                className="flex items-center justify-center text-xs font-medium transition-all"
+                                style={{ 
+                                    width: `${sharesPercent}%`,
+                                    backgroundColor: '#ffffff',
+                                    color: '#000000'
+                                }}
+                                title={`Shares: ${stateData.shares.toLocaleString()}`}
+                            >
+                                {sharesPercent > 15 && stateData.shares.toLocaleString()}
+                            </div>
+                        </div>
+                    </div>
+                );
+            })}
+            
+            {/* Legend */}
+            <div className="flex items-center justify-center gap-6 pt-4 text-xs">
+                <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded" style={{ backgroundColor: '#3478f8' }}></div>
+                    <span style={{ color: '#ffffff' }}>Views</span>
                 </div>
-            )}
+                <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded" style={{ backgroundColor: '#19c3ee' }}></div>
+                    <span style={{ color: '#ffffff' }}>Comments</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded" style={{ backgroundColor: '#ffffff' }}></div>
+                    <span style={{ color: '#ffffff' }}>Shares</span>
+                </div>
+            </div>
         </div>
     );
 }
@@ -381,7 +400,7 @@ function BarChart({ data, onPlatformClick, selectedPlatform }) {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                afterLabel: () => 'Click to see geographic breakdown'
+                                afterLabel: () => 'Click to see engagement breakdown by state'
                             }
                         }
                     },
@@ -548,12 +567,12 @@ function Dashboard() {
                     </div>
                 </div>
 
-                {/* Second Row - Social Media & Heat Map */}
+                {/* Second Row - Social Media & Engagement Breakdown */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Social Platform Engagement */}
                     <div className="bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-2">Social Media Followers</h3>
-                        <p className="text-xs text-gray-500 mb-4">💡 Click a bar to see geographic engagement</p>
+                        <p className="text-xs text-gray-500 mb-4">💡 Click a bar to see engagement breakdown by state</p>
                         <div className="chart-container">
                             <BarChart 
                                 data={mockData.platformEngagement} 
@@ -563,17 +582,17 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    {/* US Heat Map */}
+                    {/* State Engagement Breakdown */}
                     <div className="bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                            {selectedPlatform ? `${selectedPlatform} - US Engagement` : 'Geographic Engagement'}
+                            {selectedPlatform ? `${selectedPlatform} - Engagement by State` : 'State Engagement Breakdown'}
                         </h3>
-                        <div className="chart-container">
+                        <div className="overflow-y-auto" style={{ maxHeight: '300px' }}>
                             {selectedPlatform ? (
-                                <USHeatMap platform={selectedPlatform} data={getStateData()} />
+                                <StateEngagementChart platform={selectedPlatform} data={getStateData()} />
                             ) : (
                                 <div className="flex items-center justify-center h-full text-gray-500 text-sm">
-                                    Select a social platform to view geographic distribution
+                                    Select a social platform to view engagement breakdown by state
                                 </div>
                             )}
                         </div>
@@ -636,7 +655,7 @@ function Dashboard() {
                             </div>
                             <div className="p-4 rounded-lg border" style={{ backgroundColor: 'rgba(25, 195, 238, 0.1)', borderColor: 'rgba(25, 195, 238, 0.3)' }}>
                                 <div className="text-sm font-medium mb-1" style={{ color: '#19c3ee' }}>Geographic Insights</div>
-                                <div className="text-xs" style={{ color: '#3478f8' }}>CA, TX, and FL drive 45% of total engagement - strong automotive markets</div>
+                                <div className="text-xs" style={{ color: '#3478f8' }}>CA dominates views while TX shows high share rates - indicates strong community advocacy</div>
                             </div>
                         </div>
                     </div>
