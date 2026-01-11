@@ -9,13 +9,13 @@ const mockData = {
         signups: { value: 3847, change: 15.2, label: 'Early Access Sign-ups' }
     },
     videoViews: [
-        { month: 'Jul', views: 45000, watchTime: 12000 },
-        { month: 'Aug', views: 58000, watchTime: 15500 },
-        { month: 'Sep', views: 72000, watchTime: 19200 },
-        { month: 'Oct', views: 89000, watchTime: 23400 },
-        { month: 'Nov', views: 108000, watchTime: 28100 },
-        { month: 'Dec', views: 135000, watchTime: 34500 },
-        { month: 'Jan', views: 152400, watchTime: 38900 }
+        { month: 'Jul', views: 45000, watchTime: 12000, comments: 3200 },
+        { month: 'Aug', views: 58000, watchTime: 15500, comments: 4100 },
+        { month: 'Sep', views: 72000, watchTime: 19200, comments: 5400 },
+        { month: 'Oct', views: 89000, watchTime: 23400, comments: 6800 },
+        { month: 'Nov', views: 108000, watchTime: 28100, comments: 8500 },
+        { month: 'Dec', views: 135000, watchTime: 34500, comments: 11200 },
+        { month: 'Jan', views: 152400, watchTime: 38900, comments: 13800 }
     ],
     platformEngagement: [
         { 
@@ -50,6 +50,23 @@ const mockData = {
                 'NC': { views: 1500, comments: 780, shares: 420 },
                 'GA': { views: 1450, comments: 750, shares: 400 },
                 'MI': { views: 1350, comments: 700, shares: 350 }
+            }
+        },
+        { 
+            platform: 'Reddit', 
+            followers: 19800, 
+            engagement: 17.2,
+            stateEngagement: {
+                'CA': { views: 7200, comments: 4800, shares: 2100 },
+                'TX': { views: 4800, comments: 3200, shares: 1400 },
+                'NY': { views: 3900, comments: 2600, shares: 1100 },
+                'FL': { views: 3200, comments: 2100, shares: 900 },
+                'WA': { views: 2800, comments: 1850, shares: 800 },
+                'IL': { views: 2200, comments: 1450, shares: 650 },
+                'PA': { views: 1900, comments: 1250, shares: 550 },
+                'OH': { views: 1700, comments: 1100, shares: 500 },
+                'MI': { views: 1600, comments: 1050, shares: 450 },
+                'CO': { views: 1500, comments: 1000, shares: 420 }
             }
         },
         { 
@@ -146,10 +163,17 @@ function KPICard({ data, color, iconType }) {
         blue2: 'from-blue-400 to-blue-600'
     };
     
+    const tooltips = {
+        'Total Video Views': 'Total number of video views across all content in the last 30 days',
+        'Active Users': 'Unique users who engaged (viewed, commented, or shared) in the last 30 days',
+        'Engagement Rate': 'Percentage of viewers who commented or shared content (active engagement vs. passive viewing)',
+        'Early Access Sign-ups': 'Users who registered for platform early access via the waitlist'
+    };
+    
     const isPositive = data.change > 0;
     
     return (
-        <div className={`gradient-card ${colors[color]} rounded-xl p-6 text-white card-shadow stat-card`}>
+        <div className={`gradient-card ${colors[color]} rounded-xl p-6 text-white card-shadow stat-card`} title={tooltips[data.label]}>
             <div className="flex justify-between items-start mb-2">
                 <span className="text-sm font-medium opacity-90">{data.label}</span>
                 <AutomotiveIcon type={iconType} />
@@ -256,7 +280,7 @@ function StateEngagementChart({ platform, data }) {
                                 }}
                                 title={`Shares: ${stateData.shares.toLocaleString()}`}
                             >
-                                {sharesPercent > 15 && stateData.shares.toLocaleString()}
+                                {sharesPercent > 10 && <span style={{ color: '#000000' }}>{stateData.shares.toLocaleString()}</span>}
                             </div>
                         </div>
                     </div>
@@ -321,6 +345,17 @@ function LineChart({ data }) {
                             pointRadius: 4,
                             pointHoverRadius: 6,
                             pointBackgroundColor: '#19c3ee'
+                        },
+                        {
+                            label: 'Comments',
+                            data: data.map(d => d.comments || 0),
+                            borderColor: '#ffffff',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: '#ffffff'
                         }
                     ]
                 },
@@ -646,8 +681,8 @@ function Dashboard() {
                                 <div className="text-xs" style={{ color: '#19c3ee' }}>Weekend traffic increased 23% - optimal for content releases</div>
                             </div>
                             <div className="p-4 rounded-lg border" style={{ backgroundColor: 'rgba(25, 195, 238, 0.1)', borderColor: 'rgba(25, 195, 238, 0.3)' }}>
-                                <div className="text-sm font-medium mb-1" style={{ color: '#19c3ee' }}>Social Growth</div>
-                                <div className="text-xs" style={{ color: '#3478f8' }}>TikTok leading with 15.8% engagement rate - strong viral potential</div>
+                                <div className="text-sm font-medium mb-1" style={{ color: '#19c3ee' }}>Reddit Community</div>
+                                <div className="text-xs" style={{ color: '#3478f8' }}>17.2% engagement rate - automotive subreddits driving pre-launch buzz and organic discussions</div>
                             </div>
                             <div className="p-4 rounded-lg border" style={{ backgroundColor: 'rgba(52, 120, 248, 0.1)', borderColor: 'rgba(52, 120, 248, 0.3)' }}>
                                 <div className="text-sm font-medium mb-1" style={{ color: '#3478f8' }}>Conversion Rate</div>
