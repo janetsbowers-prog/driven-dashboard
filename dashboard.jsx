@@ -26,6 +26,10 @@ const mockData = {
                 posts: [12, 15, 18, 22, 28, 35, 30],
                 reposts: [45, 52, 48, 65, 72, 88, 75],
                 comments: [234, 278, 312, 389, 445, 502, 478]
+            },
+            stateEngagement: {
+                'CA': 8500, 'TX': 6200, 'FL': 4800, 'NY': 5200, 'PA': 3100,
+                'IL': 2800, 'OH': 2600, 'GA': 2400, 'NC': 2200, 'MI': 2000
             }
         },
         { 
@@ -36,6 +40,10 @@ const mockData = {
                 posts: [18, 22, 25, 28, 32, 38, 35],
                 reposts: [156, 189, 201, 245, 289, 334, 312],
                 comments: [445, 523, 589, 678, 756, 834, 789]
+            },
+            stateEngagement: {
+                'CA': 12500, 'NY': 8200, 'FL': 7800, 'TX': 6500, 'IL': 3800,
+                'PA': 3200, 'OH': 2900, 'NC': 2700, 'GA': 2600, 'MI': 2400
             }
         },
         { 
@@ -46,6 +54,10 @@ const mockData = {
                 posts: [25, 32, 38, 45, 52, 62, 58],
                 reposts: [567, 645, 712, 834, 923, 1045, 989],
                 comments: [1234, 1456, 1678, 1923, 2156, 2445, 2312]
+            },
+            stateEngagement: {
+                'CA': 15200, 'TX': 9800, 'FL': 8900, 'NY': 7200, 'GA': 4200,
+                'NC': 3800, 'IL': 3500, 'OH': 3200, 'PA': 3000, 'MI': 2800
             }
         },
         { 
@@ -56,6 +68,10 @@ const mockData = {
                 posts: [8, 10, 12, 14, 16, 19, 17],
                 reposts: [23, 28, 32, 38, 45, 52, 48],
                 comments: [89, 103, 118, 134, 156, 178, 167]
+            },
+            stateEngagement: {
+                'FL': 3200, 'TX': 2800, 'CA': 2500, 'NY': 1900, 'PA': 1500,
+                'OH': 1400, 'IL': 1200, 'NC': 1100, 'GA': 1000, 'MI': 900
             }
         }
     ],
@@ -70,25 +86,52 @@ const mockData = {
         { source: 'Direct', value: 28, percentage: '28%' },
         { source: 'Search', value: 18, percentage: '18%' },
         { source: 'Referral', value: 9, percentage: '9%' }
-    ],
-    weeklyActivity: [
-        { day: 'Mon', sessions: 1200 },
-        { day: 'Tue', sessions: 1450 },
-        { day: 'Wed', sessions: 1680 },
-        { day: 'Thu', sessions: 1820 },
-        { day: 'Fri', sessions: 2100 },
-        { day: 'Sat', sessions: 2450 },
-        { day: 'Sun', sessions: 1980 }
     ]
 };
 
+// Automotive Icon Components
+function AutomotiveIcon({ type }) {
+    const icons = {
+        headphones: (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+                <path d="M12 3C7.03 3 3 7.03 3 12v7c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4c0-1.1-.9-2-2-2H5v-1c0-3.87 3.13-7 7-7s7 3.13 7 7v1h-2c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-7c0-4.97-4.03-9-9-9z"/>
+            </svg>
+        ),
+        speedometer: (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2"/>
+                <path d="M12 6v2M12 16v2M6 12h2M16 12h2M8.5 8.5l1.4 1.4M14.1 14.1l1.4 1.4M8.5 15.5l1.4-1.4"/>
+                <circle cx="12" cy="12" r="1.5"/>
+                <path d="M12 12l4-4" stroke="currentColor" strokeWidth="2" fill="none"/>
+            </svg>
+        ),
+        wheel: (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2"/>
+                <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" strokeWidth="2"/>
+                <path d="M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8" stroke="currentColor" strokeWidth="1.5"/>
+            </svg>
+        ),
+        steering: (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2"/>
+                <circle cx="12" cy="12" r="2"/>
+                <path d="M12 2C6.48 2 2 6.48 2 12c0 2.5.93 4.77 2.45 6.5L7 16.95C5.77 15.87 5 14.26 5 12.5c0-3.87 3.13-7 7-7s7 3.13 7 7c0 1.76-.77 3.37-2 4.45l2.55 1.55C21.07 16.77 22 14.5 22 12c0-5.52-4.48-10-10-10z" fill="none" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M7 17l2-2h6l2 2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+        )
+    };
+    return icons[type];
+}
+
 // KPI Card Component
-function KPICard({ data, color, icon }) {
+function KPICard({ data, color, iconType }) {
     const colors = {
-        blue1: 'from-blue-500 to-blue-700',
-        blue2: 'from-cyan-500 to-blue-600',
-        blue3: 'from-sky-400 to-cyan-600',
-        blue4: 'from-indigo-500 to-blue-600'
+        lightBlue: 'from-cyan-400 to-cyan-600',
+        mediumBlue: 'from-blue-500 to-blue-700',
+        blue1: 'from-cyan-500 to-blue-600',
+        blue2: 'from-blue-400 to-blue-600'
     };
     
     const isPositive = data.change > 0;
@@ -97,7 +140,7 @@ function KPICard({ data, color, icon }) {
         <div className={`gradient-card ${colors[color]} rounded-xl p-6 text-white card-shadow stat-card`}>
             <div className="flex justify-between items-start mb-2">
                 <span className="text-sm font-medium opacity-90">{data.label}</span>
-                <span className="text-2xl">{icon}</span>
+                <AutomotiveIcon type={iconType} />
             </div>
             <div className="text-3xl font-bold mb-1">
                 {data.label.includes('Rate') ? `${data.value}%` : data.value.toLocaleString()}
@@ -141,6 +184,85 @@ function exportReport() {
     URL.revokeObjectURL(url);
 }
 
+// US Heat Map Component
+function USHeatMap({ platform, data }) {
+    const canvasRef = useRef(null);
+    
+    useEffect(() => {
+        if (!canvasRef.current || !data) return;
+        
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Get max value for color scaling
+        const maxValue = Math.max(...Object.values(data));
+        
+        // Simple state positions (approximate, for demo purposes)
+        const statePositions = {
+            'CA': { x: 50, y: 150, size: 60 },
+            'TX': { x: 250, y: 200, size: 55 },
+            'FL': { x: 380, y: 240, size: 45 },
+            'NY': { x: 400, y: 80, size: 35 },
+            'PA': { x: 380, y: 100, size: 30 },
+            'IL': { x: 280, y: 120, size: 30 },
+            'OH': { x: 330, y: 110, size: 28 },
+            'GA': { x: 350, y: 200, size: 28 },
+            'NC': { x: 370, y: 180, size: 28 },
+            'MI': { x: 320, y: 90, size: 28 }
+        };
+        
+        // Draw states
+        Object.entries(data).forEach(([state, value]) => {
+            const pos = statePositions[state];
+            if (!pos) return;
+            
+            const intensity = value / maxValue;
+            
+            // Color gradient from dark blue to light blue
+            const r = Math.floor(25 + intensity * 27); // 52 (dark) to 255 (light)
+            const g = Math.floor(120 + intensity * 75); // 120 to 195
+            const b = Math.floor(238 * intensity); // 0 to 238
+            
+            ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 0.8)`;
+            ctx.beginPath();
+            ctx.arc(pos.x, pos.y, pos.size, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // State label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 12px Inter';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(state, pos.x, pos.y - 5);
+            
+            // Value label
+            ctx.font = '10px Inter';
+            ctx.fillText((value / 1000).toFixed(1) + 'k', pos.x, pos.y + 8);
+        });
+        
+    }, [platform, data]);
+    
+    return (
+        <div className="relative w-full h-full flex items-center justify-center">
+            <canvas 
+                ref={canvasRef} 
+                width={500} 
+                height={300}
+                className="max-w-full"
+            />
+            {platform && (
+                <div className="absolute top-2 right-2 text-xs px-3 py-1 rounded-full" 
+                     style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: '#19c3ee' }}>
+                    {platform} Engagement by State
+                </div>
+            )}
+        </div>
+    );
+}
+
 // Line Chart Component
 function LineChart({ data }) {
     const canvasRef = useRef(null);
@@ -162,22 +284,24 @@ function LineChart({ data }) {
                         {
                             label: 'Video Views',
                             data: data.map(d => d.views),
-                            borderColor: 'rgb(59, 130, 246)',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderColor: '#3478f8',
+                            backgroundColor: 'rgba(52, 120, 248, 0.1)',
                             tension: 0.4,
                             fill: true,
                             pointRadius: 4,
-                            pointHoverRadius: 6
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: '#3478f8'
                         },
                         {
                             label: 'Watch Time (hours)',
                             data: data.map(d => d.watchTime),
-                            borderColor: 'rgb(6, 182, 212)',
-                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            borderColor: '#19c3ee',
+                            backgroundColor: 'rgba(25, 195, 238, 0.1)',
                             tension: 0.4,
                             fill: true,
                             pointRadius: 4,
-                            pointHoverRadius: 6
+                            pointHoverRadius: 6,
+                            pointBackgroundColor: '#19c3ee'
                         }
                     ]
                 },
@@ -188,7 +312,7 @@ function LineChart({ data }) {
                         legend: {
                             display: true,
                             position: 'top',
-                            labels: { color: '#e0e0e0', font: { size: 12 } }
+                            labels: { color: '#ffffff', font: { size: 12 } }
                         }
                     },
                     scales: {
@@ -237,10 +361,8 @@ function BarChart({ data, onPlatformClick, selectedPlatform }) {
                         {
                             label: 'Followers',
                             data: data.map(d => d.followers),
-                            backgroundColor: data.map((d, idx) => 
-                                selectedPlatform === d.platform 
-                                    ? 'rgba(59, 130, 246, 1)' 
-                                    : ['rgba(239, 68, 68, 0.8)', 'rgba(236, 72, 153, 0.8)', 'rgba(59, 130, 246, 0.8)', 'rgba(139, 92, 246, 0.8)'][idx]
+                            backgroundColor: data.map((d) => 
+                                selectedPlatform === d.platform ? '#ffffff' : 'rgba(52, 120, 248, 0.8)'
                             ),
                             borderRadius: 8
                         }
@@ -259,7 +381,7 @@ function BarChart({ data, onPlatformClick, selectedPlatform }) {
                         legend: { display: false },
                         tooltip: {
                             callbacks: {
-                                afterLabel: () => 'Click to see weekly breakdown'
+                                afterLabel: () => 'Click to see geographic breakdown'
                             }
                         }
                     },
@@ -288,7 +410,7 @@ function BarChart({ data, onPlatformClick, selectedPlatform }) {
     return <canvas ref={canvasRef} style={{ cursor: 'pointer' }}></canvas>;
 }
 
-// Doughnut Chart Component with Percentages
+// Doughnut Chart Component
 function DoughnutChart({ data }) {
     const canvasRef = useRef(null);
     const chartRef = useRef(null);
@@ -308,13 +430,13 @@ function DoughnutChart({ data }) {
                     datasets: [{
                         data: data.map(d => d.value),
                         backgroundColor: [
-                            'rgba(59, 130, 246, 0.8)',
-                            'rgba(6, 182, 212, 0.8)',
-                            'rgba(139, 92, 246, 0.8)',
-                            'rgba(16, 185, 129, 0.8)'
+                            'rgba(52, 120, 248, 0.9)',
+                            'rgba(25, 195, 238, 0.9)',
+                            'rgba(52, 120, 248, 0.6)',
+                            'rgba(25, 195, 238, 0.6)'
                         ],
                         borderWidth: 2,
-                        borderColor: '#1e1e2e'
+                        borderColor: '#000000'
                     }]
                 },
                 options: {
@@ -324,7 +446,7 @@ function DoughnutChart({ data }) {
                         legend: {
                             position: 'bottom',
                             labels: { 
-                                color: '#e0e0e0',
+                                color: '#ffffff',
                                 padding: 15,
                                 font: { size: 11 }
                             }
@@ -351,86 +473,6 @@ function DoughnutChart({ data }) {
     return <canvas ref={canvasRef}></canvas>;
 }
 
-// Platform Detail Chart Component
-function PlatformDetailChart({ platform, data }) {
-    const canvasRef = useRef(null);
-    const chartRef = useRef(null);
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    
-    useEffect(() => {
-        if (canvasRef.current && data) {
-            const ctx = canvasRef.current.getContext('2d');
-            
-            if (chartRef.current) {
-                chartRef.current.destroy();
-            }
-            
-            chartRef.current = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: days,
-                    datasets: [
-                        {
-                            label: '# Posts',
-                            data: data.posts,
-                            borderColor: 'rgb(59, 130, 246)',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        },
-                        {
-                            label: '# Reposts/Shares',
-                            data: data.reposts,
-                            borderColor: 'rgb(6, 182, 212)',
-                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        },
-                        {
-                            label: '# Comments',
-                            data: data.comments,
-                            borderColor: 'rgb(139, 92, 246)',
-                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top',
-                            labels: { color: '#e0e0e0', font: { size: 11 } }
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                            ticks: { color: '#a0a0b0' }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#a0a0b0' }
-                        }
-                    }
-                }
-            });
-        }
-        
-        return () => {
-            if (chartRef.current) {
-                chartRef.current.destroy();
-            }
-        };
-    }, [platform, data]);
-    
-    return <canvas ref={canvasRef}></canvas>;
-}
-
 // Main Dashboard Component
 function Dashboard() {
     const [selectedPlatform, setSelectedPlatform] = useState(null);
@@ -439,10 +481,10 @@ function Dashboard() {
         setSelectedPlatform(selectedPlatform === platform ? null : platform);
     };
     
-    const getPlatformData = () => {
+    const getStateData = () => {
         if (!selectedPlatform) return null;
         const platform = mockData.platformEngagement.find(p => p.platform === selectedPlatform);
-        return platform ? platform.weeklyData : null;
+        return platform ? platform.stateEngagement : null;
     };
     
     return (
@@ -453,15 +495,11 @@ function Dashboard() {
                     <div className="bg-white rounded-xl p-6 card-shadow">
                         <div className="flex items-center justify-between flex-wrap gap-4">
                             <div className="flex items-center gap-4">
-                                <div className="text-white font-black text-3xl tracking-wider" style={{
-                                    background: 'linear-gradient(90deg, #3b82f6 0%, #06b6d4 100%)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    fontStyle: 'italic',
-                                    letterSpacing: '0.1em'
-                                }}>
-                                    DRIVEN
-                                </div>
+                                <img 
+                                    src="https://images.fillout.com/orgid-234765/flowpublicid-aNyrvjd8Peus/widgetid-undefined/7An11ykd1KTPenpN2yqGGZ/logo-white.png?a=c1kaPUSB8CTHJw5zZavcLh" 
+                                    alt="Driven Logo" 
+                                    className="h-12"
+                                />
                                 <div>
                                     <h1 className="text-2xl font-bold text-gray-800">Analytics Dashboard</h1>
                                     <p className="text-gray-500 mt-1">Pre-Launch Community Metrics</p>
@@ -473,7 +511,8 @@ function Dashboard() {
                                 </div>
                                 <button 
                                     onClick={exportReport}
-                                    className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition hover:from-blue-600 hover:to-cyan-700"
+                                    className="bg-gradient-to-r from-blue-500 to-cyan-400 text-white px-6 py-2 rounded-lg font-medium hover:shadow-lg transition"
+                                    style={{ background: 'linear-gradient(90deg, #3478f8 0%, #19c3ee 100%)' }}
                                 >
                                     Export Report
                                 </button>
@@ -484,15 +523,15 @@ function Dashboard() {
 
                 {/* KPI Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <KPICard data={mockData.kpis.totalViews} color="blue1" icon="📺" />
-                    <KPICard data={mockData.kpis.activeUsers} color="blue2" icon="👥" />
-                    <KPICard data={mockData.kpis.engagementRate} color="blue3" icon="💬" />
-                    <KPICard data={mockData.kpis.signups} color="blue4" icon="✨" />
+                    <KPICard data={mockData.kpis.totalViews} color="mediumBlue" iconType="headphones" />
+                    <KPICard data={mockData.kpis.activeUsers} color="lightBlue" iconType="steering" />
+                    <KPICard data={mockData.kpis.engagementRate} color="blue1" iconType="speedometer" />
+                    <KPICard data={mockData.kpis.signups} color="blue2" iconType="wheel" />
                 </div>
 
                 {/* Main Charts Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                    {/* Video Views Trend - Takes 2 columns */}
+                    {/* Video Views Trend */}
                     <div className="lg:col-span-2 bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Video Performance Trends</h3>
                         <div className="chart-container">
@@ -500,7 +539,7 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    {/* Traffic Sources - 1 column */}
+                    {/* Traffic Sources */}
                     <div className="bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Traffic Sources</h3>
                         <div className="chart-container">
@@ -509,12 +548,12 @@ function Dashboard() {
                     </div>
                 </div>
 
-                {/* Second Row of Charts */}
+                {/* Second Row - Social Media & Heat Map */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                     {/* Social Platform Engagement */}
                     <div className="bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-2">Social Media Followers</h3>
-                        <p className="text-xs text-gray-500 mb-4">💡 Click a bar to see weekly engagement breakdown</p>
+                        <p className="text-xs text-gray-500 mb-4">💡 Click a bar to see geographic engagement</p>
                         <div className="chart-container">
                             <BarChart 
                                 data={mockData.platformEngagement} 
@@ -524,24 +563,27 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    {/* Weekly Activity or Platform Detail */}
+                    {/* US Heat Map */}
                     <div className="bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                            {selectedPlatform ? `${selectedPlatform} - Weekly Breakdown` : 'Overall Weekly Activity'}
+                            {selectedPlatform ? `${selectedPlatform} - US Engagement` : 'Geographic Engagement'}
                         </h3>
                         <div className="chart-container">
                             {selectedPlatform ? (
-                                <PlatformDetailChart platform={selectedPlatform} data={getPlatformData()} />
+                                <USHeatMap platform={selectedPlatform} data={getStateData()} />
                             ) : (
-                                <LineChart data={mockData.weeklyActivity.map(d => ({ month: d.day, views: d.sessions, watchTime: 0 }))} />
+                                <div className="flex items-center justify-center h-full text-gray-500 text-sm">
+                                    Select a social platform to view geographic distribution
+                                </div>
                             )}
                         </div>
                         {selectedPlatform && (
                             <button 
                                 onClick={() => setSelectedPlatform(null)}
-                                className="mt-4 text-sm text-blue-400 hover:text-blue-300"
+                                className="mt-4 text-sm hover:underline"
+                                style={{ color: '#19c3ee' }}
                             >
-                                ← Back to overall activity
+                                ← Clear selection
                             </button>
                         )}
                     </div>
@@ -549,14 +591,15 @@ function Dashboard() {
 
                 {/* Bottom Section - Top Videos and Stats */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Top Videos List - 2 columns */}
+                    {/* Top Videos List */}
                     <div className="lg:col-span-2 bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Top Performing Videos</h3>
                         <div className="space-y-3">
                             {mockData.topVideos.map((video, idx) => (
                                 <div key={idx} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center text-white font-bold">
+                                        <div className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold"
+                                             style={{ background: idx % 2 === 0 ? '#3478f8' : '#19c3ee' }}>
                                             {idx + 1}
                                         </div>
                                         <div>
@@ -575,32 +618,32 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    {/* Key Insights - 1 column */}
+                    {/* Key Insights */}
                     <div className="bg-white rounded-xl p-6 card-shadow">
                         <h3 className="text-lg font-semibold text-gray-800 mb-4">Key Insights</h3>
                         <div className="space-y-4">
-                            <div className="p-4 bg-blue-900 bg-opacity-10 rounded-lg border border-blue-500 border-opacity-20">
-                                <div className="text-sm font-medium text-blue-300 mb-1">Peak Engagement</div>
-                                <div className="text-xs text-blue-200">Weekend traffic increased 23% - optimal for content releases</div>
+                            <div className="p-4 rounded-lg border" style={{ backgroundColor: 'rgba(52, 120, 248, 0.1)', borderColor: 'rgba(52, 120, 248, 0.3)' }}>
+                                <div className="text-sm font-medium mb-1" style={{ color: '#3478f8' }}>Peak Engagement</div>
+                                <div className="text-xs" style={{ color: '#19c3ee' }}>Weekend traffic increased 23% - optimal for content releases</div>
                             </div>
-                            <div className="p-4 bg-cyan-900 bg-opacity-10 rounded-lg border border-cyan-500 border-opacity-20">
-                                <div className="text-sm font-medium text-cyan-300 mb-1">Social Growth</div>
-                                <div className="text-xs text-cyan-200">TikTok leading with 15.8% engagement rate - strong viral potential</div>
+                            <div className="p-4 rounded-lg border" style={{ backgroundColor: 'rgba(25, 195, 238, 0.1)', borderColor: 'rgba(25, 195, 238, 0.3)' }}>
+                                <div className="text-sm font-medium mb-1" style={{ color: '#19c3ee' }}>Social Growth</div>
+                                <div className="text-xs" style={{ color: '#3478f8' }}>TikTok leading with 15.8% engagement rate - strong viral potential</div>
                             </div>
-                            <div className="p-4 bg-blue-900 bg-opacity-10 rounded-lg border border-blue-500 border-opacity-20">
-                                <div className="text-sm font-medium text-blue-300 mb-1">Conversion Rate</div>
-                                <div className="text-xs text-blue-200">46.7% visitor-to-signup rate - exceeding industry benchmarks</div>
+                            <div className="p-4 rounded-lg border" style={{ backgroundColor: 'rgba(52, 120, 248, 0.1)', borderColor: 'rgba(52, 120, 248, 0.3)' }}>
+                                <div className="text-sm font-medium mb-1" style={{ color: '#3478f8' }}>Conversion Rate</div>
+                                <div className="text-xs" style={{ color: '#19c3ee' }}>46.7% visitor-to-signup rate - exceeding industry benchmarks</div>
                             </div>
-                            <div className="p-4 bg-cyan-900 bg-opacity-10 rounded-lg border border-cyan-500 border-opacity-20">
-                                <div className="text-sm font-medium text-cyan-300 mb-1">Community Engagement</div>
-                                <div className="text-xs text-cyan-200">Avg 3.2k comments per video - highly engaged automotive enthusiast community</div>
+                            <div className="p-4 rounded-lg border" style={{ backgroundColor: 'rgba(25, 195, 238, 0.1)', borderColor: 'rgba(25, 195, 238, 0.3)' }}>
+                                <div className="text-sm font-medium mb-1" style={{ color: '#19c3ee' }}>Geographic Insights</div>
+                                <div className="text-xs" style={{ color: '#3478f8' }}>CA, TX, and FL drive 45% of total engagement - strong automotive markets</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Footer */}
-                <div className="mt-8 text-center text-gray-400 text-sm">
+                <div className="mt-8 text-center text-gray-500 text-sm">
                     <p>Dashboard Demo for Driven Platform • Created by Janet</p>
                 </div>
             </div>
