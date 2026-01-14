@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: #f5f5f7;
+            background: #1f2937;
             min-height: 100vh;
         }
         
@@ -58,9 +58,8 @@
         .speedometer {
             position: relative;
             width: 140px;
-            height: 120px;
+            height: 90px;
             margin: 0 auto;
-            padding-bottom: 5px;
         }
         
         .tab-content {
@@ -146,7 +145,7 @@
         <div id="north-star" class="tab-content active">
             <!-- Speedometer Gauges - All in One Card -->
             <div class="metric-card rounded-lg p-6 mb-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 divide-x divide-gray-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 divide-x divide-gray-200">
                     
                     <!-- DAU/MAU - Speedometer -->
                     <div class="px-4 first:pl-0">
@@ -316,7 +315,7 @@
 
                 <!-- KPI Dials -->
                 <div class="metric-card rounded-lg p-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 divide-x divide-gray-200">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 divide-x divide-gray-200">
 
                     <!-- CAC -->
                     <div class="px-4 first:pl-0">
@@ -706,72 +705,6 @@
                         ctx.stroke();
                         
                         ctx.restore();
-                        
-                        // Determine unit based on value range
-                        let unit = '';
-                        if (max <= 20 && value < 15) {
-                            // Time values
-                            unit = ' min';
-                        } else if (max <= 20 && min === 0) {
-                            // Dollar values (CAC)
-                            unit = '';
-                        } else {
-                            // Percentage values
-                            unit = '%';
-                        }
-                        
-                        // Draw labels at color zone transitions - OUTSIDE the arc
-                        ctx.fillStyle = '#6b7280';
-                        ctx.font = 'bold 9px Inter';
-                        ctx.textAlign = 'center';
-                        
-                        if (lowerIsBetter) {
-                            // For "lower is better" metrics (like churn)
-                            // Labels at: 0, targetMax, and 100
-                            // Left (0) at 180°
-                            const angle0 = Math.PI;
-                            const x0 = cx + Math.cos(angle0) * radius * 1.15;
-                            const y0 = cy + Math.sin(angle0) * radius * 1.15 + 8;
-                            ctx.fillText(min + unit, x0, y0);
-                            
-                            // Target max position
-                            const targetMaxAngle = Math.PI + (targetMax / max) * Math.PI;
-                            const xTarget = cx + Math.cos(targetMaxAngle) * radius * 1.15;
-                            const yTarget = cy + Math.sin(targetMaxAngle) * radius * 1.15;
-                            ctx.fillText(targetMax + unit, xTarget, yTarget);
-                            
-                            // Right (max) at 0°
-                            const angleMax = 0;
-                            const xMax = cx + Math.cos(angleMax) * radius * 1.15;
-                            const yMax = cy + Math.sin(angleMax) * radius * 1.15 + 8;
-                            ctx.fillText(max + unit, xMax, yMax);
-                        } else {
-                            // For "higher is better" or "range is better" metrics
-                            // Labels at: 0, targetMin, targetMax, and max
-                            // Left (0) at 180°
-                            const angle0 = Math.PI;
-                            const x0 = cx + Math.cos(angle0) * radius * 1.15;
-                            const y0 = cy + Math.sin(angle0) * radius * 1.15 + 8;
-                            ctx.fillText(min + unit, x0, y0);
-                            
-                            // Target min position
-                            const targetMinAngle = Math.PI + (targetMin / max) * Math.PI;
-                            const xTargetMin = cx + Math.cos(targetMinAngle) * radius * 1.15;
-                            const yTargetMin = cy + Math.sin(targetMinAngle) * radius * 1.15;
-                            ctx.fillText(targetMin + unit, xTargetMin, yTargetMin);
-                            
-                            // Target max position
-                            const targetMaxAngle = Math.PI + (targetMax / max) * Math.PI;
-                            const xTargetMax = cx + Math.cos(targetMaxAngle) * radius * 1.15;
-                            const yTargetMax = cy + Math.sin(targetMaxAngle) * radius * 1.15;
-                            ctx.fillText(targetMax + unit, xTargetMax, yTargetMax);
-                            
-                            // Right (max) at 0°
-                            const angleMax = 0;
-                            const xMax = cx + Math.cos(angleMax) * radius * 1.15;
-                            const yMax = cy + Math.sin(angleMax) * radius * 1.15 + 8;
-                            ctx.fillText(max + unit, xMax, yMax);
-                        }
                     }
                 }]
             });
